@@ -1,6 +1,6 @@
 # r-training
 
-Notas y apuntes de R. Puede que lo elimine en el futuro
+Notas y apuntes de R mientras voy aprendiendo. Puede que lo elimine en el futuro
 
 ## Ayuda
 
@@ -20,6 +20,26 @@ Obtener información estructurada de una variable
 ```R
 # str(object, ...)
 str(vars)
+```
+
+## Funciones para imprimir por consola
+
+#### print()
+
+Imprime por pantalla
+
+```R
+# print(X, ...)
+print('hola')
+```
+
+#### paste()
+
+Concatena valores (y convierte a strings)
+
+```R
+# paste (..., sep = " ", collapse = NULL, recycle0 = FALSE)
+paste('hola', 'mundo')
 ```
 
 ## lapply, sapply y vapply
