@@ -52,4 +52,4 @@ Aplica una función a un iterable y devuelve un **vector** con formato definido
 # vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE)
 vapply(temp, basics, FUN.VALUE=numeric(3))
 ```
-> numeric(3): el resultado de cada iteración de `temp` es un vector con 3 números. También existe `character()` o `logical()`
+> `numeric(3)`: el resultado de cada iteración de `temp` es un vector con 3 números. También existe `character()` o `logical()`
