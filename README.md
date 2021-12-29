@@ -21,7 +21,7 @@ str(vars)
 
 Funciones para aplicar sobre iterables
 
-##### lapply
+#### lapply
 
 Aplica una función a un iterable y devuelve una **lista**
 
@@ -30,7 +30,7 @@ Aplica una función a un iterable y devuelve una **lista**
 low_pioners <- lapply(pioneers, tolower)
 ```
 
-##### sapply
+#### sapply
 
 Aplica una función a un iterable y devuelve una lista/vector/loquesea (lo intenta **simplificar**)
 
@@ -39,7 +39,7 @@ Aplica una función a un iterable y devuelve una lista/vector/loquesea (lo inten
 sapply(pioneers, function(x) { nchar(x) + 1 })
 ```
 
-##### vapply
+#### vapply
 
 Aplica una función a un iterable y devuelve un **vector** con formato definido
 
