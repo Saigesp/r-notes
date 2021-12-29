@@ -21,21 +21,30 @@ str(vars)
 
 Funciones para aplicar sobre iterables
 
-`lapply(X, FUN, ...)`: Aplicar función a iterable y devuelve una **lista**
+##### lapply
+
+Aplica una función a un iterable y devuelve una **lista**
 
 ```R
+# lapply(X, FUN, ...)
 low_pioners <- lapply(pioneers, tolower)
 ```
 
-`sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)`: Aplicar función a iterable y devuelve una lista/vector/loquesea (lo intenta **simplificar**)
+##### sapply
+
+Aplica una función a un iterable y devuelve una lista/vector/loquesea (lo intenta **simplificar**)
 
 ```R
-lapply(pioneers, function(x) { nchar(x) + 1 })
+# sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
+sapply(pioneers, function(x) { nchar(x) + 1 })
 ```
 
-`vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE)`: Aplicar función a iterable y devuelve un **vector** con formato definido
+##### vapply
+
+Aplica una función a un iterable y devuelve un **vector** con formato definido
 
 ```R
+# vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE)
 vapply(temp, basics, FUN.VALUE=numeric(3))
 ```
 > numeric(3): el resultado de cada iteración de `temp` es un vector con 3 números. También existe `character()` o `logical()`
