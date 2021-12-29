@@ -1,19 +1,24 @@
 # r-training
 
-Notas y apuntes de R
+Notas y apuntes de R. Puede que lo elimine en el futuro
 
 ## Ayuda
 
-`?<funcion>`: Consulta información sobre la función
+#### ?
+
+Consulta información sobre una función
 
 ```R
+# ?FUN
 ?gsub
 ```
 
-`str(<var>)`: Obtener información estructurada de una variable
+#### str
+
+Obtener información estructurada de una variable
 
 ```R
-vars <- c(16, 9, 13, 5, 2, 17, 14)
+# str(object, ...)
 str(vars)
 ```
 
@@ -21,7 +26,7 @@ str(vars)
 
 Funciones para aplicar sobre iterables
 
-#### lapply
+#### lapply()
 
 Aplica una función a un iterable y devuelve una **lista**
 
@@ -30,7 +35,7 @@ Aplica una función a un iterable y devuelve una **lista**
 low_pioners <- lapply(pioneers, tolower)
 ```
 
-#### sapply
+#### sapply()
 
 Aplica una función a un iterable y devuelve una lista/vector/loquesea (lo intenta **simplificar**)
 
@@ -39,7 +44,7 @@ Aplica una función a un iterable y devuelve una lista/vector/loquesea (lo inten
 sapply(pioneers, function(x) { nchar(x) + 1 })
 ```
 
-#### vapply
+#### vapply()
 
 Aplica una función a un iterable y devuelve un **vector** con formato definido
 
