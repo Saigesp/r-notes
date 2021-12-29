@@ -13,7 +13,7 @@ Consulta información sobre una función
 ?gsub
 ```
 
-#### str
+#### str()
 
 Obtener información estructurada de una variable
 
