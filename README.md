@@ -17,21 +17,23 @@ vars <- c(16, 9, 13, 5, 2, 17, 14)
 str(vars)
 ```
 
-## lapply(), sapply() y vapply()
+## lapply, sapply y vapply
 
-`lapply`: Aplicar función a iterable y devuelve una **lista**
+Funciones para aplicar sobre iterables
+
+`lapply(X, FUN, ...)`: Aplicar función a iterable y devuelve una **lista**
 
 ```R
 low_pioners <- lapply(pioneers, tolower)
 ```
 
-`sapply`: Aplicar función a iterable y devuelve una lista/vector/loquesea (lo intenta **simplificar**)
+`sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)`: Aplicar función a iterable y devuelve una lista/vector/loquesea (lo intenta **simplificar**)
 
 ```R
 lapply(pioneers, function(x) { nchar(x) + 1 })
 ```
 
-`lapply`: Aplicar función a iterable y devuelve un **vector** con formato definido
+`vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE)`: Aplicar función a iterable y devuelve un **vector** con formato definido
 
 ```R
 vapply(temp, basics, FUN.VALUE=numeric(3))
