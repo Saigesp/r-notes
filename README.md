@@ -227,6 +227,44 @@ Substituye strings con expresiones regulares (global)
 gsub('a', 'A', c("gato", "perro", "caballo")) # "gAto" "perro" "cAbAllo"
 ```
 
+## Fecha y tiempo
+
+#### Sys.time()
+
+Devuelve la fecha y hora del sistema
+
+```R
+Sys.time() # "2021-12-30 15:03:32 CET"
+```
+
+#### Sys.Date()
+
+Devuelve la fecha del sistema
+
+```R
+Sys.Date() # "2021-12-30"
+```
+
+#### as.Date()
+
+Genera fecha con el string introducido
+
+```R
+# as.Date(x, format, ...)
+as.Date('2021-11-30') # "2021-11-30"
+as.Date('30-12-2021', '%d-%m-%Y') # "2021-11-30"
+```
+
+#### as.POSIXct
+
+Genera fecha y hora con string introducido
+
+```R
+# as.POSIXct(x, tz = "", ...)
+as.POSIXct('2021-12-30 12:12:60') "2021-12-30 12:13:00 CET"
+```
+> Módulos útiles para trabajar con fechas: `lubridate`, `zoo`, `xts`
+
 ## lapply, sapply y vapply
 
 Funciones para aplicar sobre iterables
