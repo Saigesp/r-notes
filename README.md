@@ -42,6 +42,48 @@ Concatena valores (y convierte a strings)
 paste('hola', 'mundo')
 ```
 
+## Utilidades matemáticas
+
+#### abs()
+
+Valor absoluto
+
+```R
+# abs(x)
+abs(-20) # 20
+abs(c(-1, -2, 3)) # 1 2 3
+```
+
+#### round()
+
+Redondear valores
+
+```R
+# round(x, digits = 0)
+round(1.39, 1) # 1.3
+round(c(1.1, 2.5, 3.9)) # 1 2 4
+```
+
+#### ceiling()
+
+Redondear valores al entero superior
+
+```R
+# ceiling(x)
+ceiling(1.4) # 2
+ceiling(c(1.4, 2.0)) # 2 2
+```
+
+#### floor()
+
+Redondear valores al entero inferior
+
+```R
+# floor(x)
+floor(1.8) # 1
+floor(c(1.4, 2.9)) # 1 2
+```
+
 ## lapply, sapply y vapply
 
 Funciones para aplicar sobre iterables
