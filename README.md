@@ -42,6 +42,29 @@ Concatena valores (y convierte a strings)
 paste('hola', 'mundo')
 ```
 
+## Comparación de valores
+
+#### identical()
+
+Compara dos valores
+
+```R
+# identical(x, y, ...)
+identical(1, 2) # FALSE
+identical(c("a","b"), sort(c('b', 'a'))) # TRUE
+```
+
+#### is.list()
+
+Comprueba si un valor es una lista
+
+```R
+# is.list(x)
+is.list(list(1, 2, 3)) # TRUE
+is.list(c(1, 2, 3)) # FALSE
+```
+
+
 ## Utilidades matemáticas
 
 #### abs()
