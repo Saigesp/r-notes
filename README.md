@@ -122,7 +122,19 @@ Replica los valores de x (vector o lista normalmente)
 ```R
 # rep(x, times = 1, length.out = NA, each = 1)
 rep(23, 3) # 23 23 23
-rep(c(1, 2, 3), 2) # 1 2 3 1 2 3
+rep(c(1, 2, 3), times=2) # 1 2 3 1 2 3
+rep(c(1, 2, 3), each=2) # 1 1 2 2 3 3
+```
+
+#### sort()
+
+Ordena los valores de x
+
+```R
+# sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE, method = c("auto", "shell", "quick", "radix"), index.return = FALSE)
+sort(c(3,1,2)) # 1 2 3
+sort(c(3,1,2), decreasing=TRUE) # 3 2 1
+sort(c('lorem', 'ipsum', 'dolor')) # "dolor" "ipsum" "lorem"
 ```
 
 ## lapply, sapply y vapply
