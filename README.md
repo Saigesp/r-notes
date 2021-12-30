@@ -189,6 +189,44 @@ Invierte el orden del elemento
 rev(c(1, 2, 3)) # 3 2 1
 ```
 
+## Expresiones regulares
+
+#### grep()
+
+Devuelve las posiciones del vector/lista que hacen match
+
+```R
+# grep(pattern, x, ignore.case = FALSE, value = FALSE, ...)
+grep('a', c("gato", "perro", "caballo")) # 1 3
+```
+
+#### grepl()
+
+Devuelve un vector lógico con los matchs
+
+```R
+# grepl(pattern, x, ignore.case = FALSE, ...)
+grepl('a', c("gato", "perro", "caballo")) # TRUE FALSE TRUE
+```
+
+#### sub()
+
+Substituye strings con expresiones regulares (solo primer match de cada item)
+
+```R
+# sub(pattern, replacement, x, ignore.case = FALSE, ...)
+sub('a', 'A', c("gato", "perro", "caballo")) # "gAto" "perro" "cAballo"
+```
+
+#### gsub()
+
+Substituye strings con expresiones regulares (global)
+
+```R
+# gsub(pattern, replacement, x, ignore.case = FALSE, ...)
+gsub('a', 'A', c("gato", "perro", "caballo")) # "gAto" "perro" "cAbAllo"
+```
+
 ## lapply, sapply y vapply
 
 Funciones para aplicar sobre iterables
