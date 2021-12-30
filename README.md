@@ -1,4 +1,4 @@
-# r-training
+# R training
 
 Notas y apuntes de R mientras voy aprendiendo. Puede que lo elimine en el futuro
 
