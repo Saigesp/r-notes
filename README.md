@@ -133,7 +133,7 @@ mean(c(2, 4, 6)) # 4
 Generar secuencia de datos
 
 ```R
-# seq(from = 1, to = 1, by = ((to - from)/(length.out - 1)), length.out = NULL, along.with = NULL, ...)
+# seq(from = 1, to = 1, by = ((to - from)/(length.out - 1)), ...)
 seq(1, 5) # 1 2 3 4 5
 seq(5, 1, -2) # 5 3 1
 ```
@@ -154,7 +154,7 @@ rep(c(1, 2, 3), each=2) # 1 1 2 2 3 3
 Ordena los valores de x
 
 ```R
-# sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE, method = c("auto", "shell", "quick", "radix"), index.return = FALSE)
+# sort(x, decreasing = FALSE, ...)
 sort(c(3,1,2)) # 1 2 3
 sort(c(3,1,2), decreasing=TRUE) # 3 2 1
 sort(c('lorem', 'ipsum', 'dolor')) # "dolor" "ipsum" "lorem"
@@ -204,7 +204,7 @@ low_pioners <- lapply(pioneers, tolower)
 
 #### sapply()
 
-Aplica una función a un iterable y devuelve una lista/vector/loquesea (lo intenta **simplificar**)
+Aplica una función a un iterable y devuelve una lista/vector **simplificado**
 
 ```R
 # sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
@@ -219,4 +219,4 @@ Aplica una función a un iterable y devuelve un **vector** con formato definido
 # vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE)
 vapply(temp, basics, FUN.VALUE=numeric(3))
 ```
-> `numeric(3)`: el resultado de cada iteración de `temp` es un vector con 3 números. También existe `character()` o `logical()`
+> `numeric(3)`: el resultado de cada iteración de `temp` es un vector numérico de longitud 3. También existe `character()` o `logical()`
