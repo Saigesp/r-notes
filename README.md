@@ -103,6 +103,19 @@ Calcular media (average)
 mean(c(2, 4, 6)) # 4
 ```
 
+## Funciones para estructuras de datos
+
+#### seq()
+
+Generar secuencia de datos
+
+```R
+# seq(...)
+# seq(from = 1, to = 1, by = ((to - from)/(length.out - 1)), length.out = NULL, along.with = NULL, ...)
+seq(1, 5) # 1 2 3 4 5
+seq(5, 1, -2) # 5 3 1
+```
+
 ## lapply, sapply y vapply
 
 Funciones para aplicar sobre iterables
