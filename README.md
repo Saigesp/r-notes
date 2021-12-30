@@ -84,6 +84,25 @@ floor(1.8) # 1
 floor(c(1.4, 2.9)) # 1 2
 ```
 
+#### sum()
+
+Sumar valores
+
+```R
+# sum(..., na.rm = FALSE)
+sum(1, 4, 5) # 10
+sum(c(1, 4, 5)) # 10
+```
+
+#### mean()
+
+Calcular media (average)
+
+```R
+# mean(x, ...)
+mean(c(2, 4, 6)) # 4
+```
+
 ## lapply, sapply y vapply
 
 Funciones para aplicar sobre iterables
