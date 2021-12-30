@@ -160,6 +160,35 @@ sort(c(3,1,2), decreasing=TRUE) # 3 2 1
 sort(c('lorem', 'ipsum', 'dolor')) # "dolor" "ipsum" "lorem"
 ```
 
+#### unlist()
+
+Convierte una lista a un vector
+
+```R
+# unlist(x, recursive = TRUE, use.names = TRUE)
+unlist(list(1, 2, 3)) # 1 2 3
+unlist(list(1, 2, 'a')) # "1" "2" "a"
+```
+
+#### append()
+
+Añade elementos a un vector
+
+```R
+# append(x, values, after = length(x))
+append(c(1, 2), 3) # 1 2 3
+append(c(1, 2), c(3, 4)) # 1 2 3 4
+```
+
+#### rev()
+
+Invierte el orden del elemento
+
+```R
+# rev(x)
+rev(c(1, 2, 3)) # 3 2 1
+```
+
 ## lapply, sapply y vapply
 
 Funciones para aplicar sobre iterables
