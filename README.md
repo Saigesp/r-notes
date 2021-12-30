@@ -110,10 +110,19 @@ mean(c(2, 4, 6)) # 4
 Generar secuencia de datos
 
 ```R
-# seq(...)
 # seq(from = 1, to = 1, by = ((to - from)/(length.out - 1)), length.out = NULL, along.with = NULL, ...)
 seq(1, 5) # 1 2 3 4 5
 seq(5, 1, -2) # 5 3 1
+```
+
+#### rep()
+
+Replica los valores de x (vector o lista normalmente)
+
+```R
+# rep(x, times = 1, length.out = NA, each = 1)
+rep(23, 3) # 23 23 23
+rep(c(1, 2, 3), 2) # 1 2 3 1 2 3
 ```
 
 ## lapply, sapply y vapply
