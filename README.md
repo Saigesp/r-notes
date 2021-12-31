@@ -22,6 +22,15 @@ Obtener información estructurada de una variable
 str(vars)
 ```
 
+#### system.time()
+
+Consulta el uso de la CPU de una expresión
+
+```R
+# system.time(expr, ...)
+system.time(seq(5e8, 1, -2))
+```
+
 ## Funciones para imprimir por consola
 
 #### print()
@@ -83,6 +92,7 @@ Redondear valores
 
 ```R
 # round(x, digits = 0)
+round(2.25)
 round(1.39, 1) # 1.3
 round(c(1.1, 2.5, 3.9)) # 1 2 4
 ```
