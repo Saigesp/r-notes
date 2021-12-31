@@ -229,20 +229,20 @@ gsub('a', 'A', c("gato", "perro", "caballo")) # "gAto" "perro" "cAbAllo"
 
 ## Fecha y tiempo
 
-#### Sys.time()
-
-Devuelve la fecha y hora del sistema
-
-```R
-Sys.time() # "2021-12-30 15:03:32 CET"
-```
-
 #### Sys.Date()
 
 Devuelve la fecha del sistema
 
 ```R
 Sys.Date() # "2021-12-30"
+```
+
+#### Sys.time()
+
+Devuelve la fecha y hora del sistema
+
+```R
+Sys.time() # "2021-12-30 15:03:32 CET"
 ```
 
 #### as.Date()
@@ -264,6 +264,16 @@ Genera fecha y hora con string introducido
 as.POSIXct('2021-12-30 12:12:60') "2021-12-30 12:13:00 CET"
 ```
 > Módulos útiles para trabajar con fechas: `lubridate`, `zoo`, `xts`
+
+#### format()
+
+Formatear objeto
+
+```R
+# format(x ...)
+format(Sys.Date(), '%d/%m/%Y') # "31/12/2021"
+format(c(as.Date('2021-12-25'), as.Date('2021-12-26')), '%d') "25" "26"
+```
 
 ## lapply, sapply y vapply
 
