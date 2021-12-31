@@ -252,7 +252,8 @@ Genera fecha con el string introducido
 ```R
 # as.Date(x, format, ...)
 as.Date('2021-11-30') # "2021-11-30"
-as.Date('30-12-2021', '%d-%m-%Y') # "2021-11-30"
+as.Date('30-12-2021', format='%d-%m-%Y') # "2021-11-30"
+as.Date(c('21-12-01', '21-12-02'), '%y-%m-%d') # "2021-12-01" "2021-12-02"
 ```
 
 #### as.POSIXct
