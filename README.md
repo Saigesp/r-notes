@@ -317,3 +317,34 @@ Aplica una función a un iterable y devuelve un **vector** con formato definido
 vapply(temp, basics, FUN.VALUE=numeric(3))
 ```
 > `numeric(3)`: el resultado de cada iteración de `temp` es un vector numérico de longitud 3. También existe `character()` o `logical()`
+
+
+## Importar datos
+
+#### read.csv()
+
+Importar datos de un csv como data.frame
+
+```R
+# read.csv(file, header = TRUE, sep = ",", quote = "\"", stringsAsFactors = FALSE, ...)
+movies <- read.csv('movies.csv')
+actors <- read.csv(file.path('~', 'repo', 'actors.csv'))
+```
+
+#### read.delim()
+
+Importar datos de un csv separado por otros caractéres
+
+```R
+# read.delim(file, header = TRUE, sep = "\t", quote = "\"", ...)
+movies <- read.delim('movies.csv', sep=";")
+```
+
+#### read.table()
+
+Importar datos de un archivo tabular
+
+```R
+# read.table(file, header = FALSE, sep = "", quote = "\"'", row.names, col.names, ...)
+movies <- read.table('movies.csv', sep=";", fileEncoding="latin-1")
+```
