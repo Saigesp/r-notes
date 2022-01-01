@@ -1,11 +1,12 @@
 # readr
 
-Leer archivos "rectangulares" a un **tibble** (dataframe con esteroides)
+Paquete para importar datos tabulares a un objeto **tibble** (dataframe con esteroides).
 
 Documentación: (https://readr.tidyverse.org/reference/)
 
 ```R
 install.packages("readr")
+library(readr)
 ```
 
 #### read_delim()
