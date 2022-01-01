@@ -15,11 +15,20 @@ Consulta información sobre una función
 
 #### str()
 
-Obtener información estructurada de una variable
+Obtener información de la estructura de una variable
 
 ```R
 # str(object, ...)
-str(vars)
+str(var)
+```
+
+#### summary()
+
+Obtener información de una variable dependiendo de su clase
+
+```R
+# summary(object, ...)
+summary(var)
 ```
 
 #### system.time()
