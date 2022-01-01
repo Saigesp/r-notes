@@ -31,6 +31,24 @@ Obtener información de una variable dependiendo de su clase
 summary(var)
 ```
 
+#### head()
+
+Devuelve las primeras filas de un objeto
+
+```R
+# head(x, n = 6L, addrownums, ...)
+head(var)
+```
+
+#### tail()
+
+Devuelve las últimas filas de un objeto
+
+```R
+# tail(x, n = 6L, addrownums, ...)
+tail(var)
+```
+
 #### system.time()
 
 Consulta el uso de la CPU de una expresión
