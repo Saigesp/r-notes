@@ -14,9 +14,9 @@ Importar datos de un archivo tabular. (https://readr.tidyverse.org/reference/rea
 
 ```R
 # read_delim(file, delim = NULL, quote = "\"", ...)
-movies <- read_delim('movies.csv', delim=";", col_types= "cln")
+movies <- read_delim('movies.csv', delim=";", col_types= "cldi")
 ```
-> `col_types` puede representarse como string: **c**haracter, **l**ogical, **n**umerical...
+> `col_types` puede representarse como string: **c**haracter, **l**ogical, **d**ouble, **i**nteger...
 
 #### read_csv()
 
