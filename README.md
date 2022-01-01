@@ -375,3 +375,4 @@ Importar datos de un archivo tabular
 # read.table(file, header = FALSE, sep = "", quote = "\"'", row.names, col.names, ...)
 movies <- read.table('movies.csv', sep=";", fileEncoding="latin-1")
 ```
+> Módulos útiles: [readr](/readr/README.md)
