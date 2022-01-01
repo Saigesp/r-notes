@@ -2,7 +2,7 @@
 
 Paquete para trabajar con datos tabulares con el objeto **data.table** (dataframe con esteroides).
 
-Documentación: (https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
+Documentación: https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html
 
 ```R
 install.packages("data.table")
@@ -11,7 +11,7 @@ library(data.table)
 
 #### fread()
 
-Similar a read.table pero más rápido y cómodo: (https://www.rdocumentation.org/packages/data.table/versions/1.14.2/topics/fread)
+Similar a read.table pero más rápido y cómodo: https://www.rdocumentation.org/packages/data.table/versions/1.14.2/topics/fread
 
 ```R
 # fread(input, file, text, cmd, sep="auto", sep2="auto", dec=".", quote="\"", ...)

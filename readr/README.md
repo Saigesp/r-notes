@@ -2,7 +2,7 @@
 
 Paquete para importar datos tabulares a un objeto **tibble** (dataframe con esteroides).
 
-Documentación: (https://readr.tidyverse.org/reference/)
+Documentación: https://readr.tidyverse.org/reference/
 
 ```R
 install.packages("readr")
@@ -11,7 +11,7 @@ library(readr)
 
 #### read_delim()
 
-Importar datos de un archivo tabular. (https://readr.tidyverse.org/reference/read_delim.html)
+Importar datos de un archivo tabular. https://readr.tidyverse.org/reference/read_delim.html
 
 ```R
 # read_delim(file, delim = NULL, quote = "\"", ...)

@@ -2,7 +2,7 @@
 
 Importar datos desde archivos Excel (xls y xlsx).
 
-Documentación: (https://rdocumentation.org/packages/readxl/versions/1.3.1)
+Documentación: https://rdocumentation.org/packages/readxl/versions/1.3.1
 
 ```R
 install.packages("readxl")
