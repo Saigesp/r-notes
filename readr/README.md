@@ -18,6 +18,18 @@ movies <- read_delim('movies.csv', delim=";", col_types= "cldi")
 ```
 > `col_types` puede representarse como string: **c**haracter, **l**ogical, **d**ouble, **i**nteger...
 
+Para determinar los tipos de columna `col_types`, pueden usarse colectores:
+
+```R
+fac <- col_factor(levels = c("Beef", "Meat", "Poultry"))
+int <- col_integer()
+
+hotdogs <- read_tsv("hotdogs.txt",
+    col_names = c("type", "calories", "sodium"),
+    col_types = list(fac, int, int))
+
+```
+
 #### read_csv()
 
 ```R
