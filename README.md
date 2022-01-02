@@ -383,6 +383,8 @@ movies <- read.table('movies.csv', sep=";", fileEncoding="latin-1")
 
 Genera scatterplots de un objeto
 
+![plot() example](https://github.com/Saigesp/r-training/blob/master/_media/root-scatterplot.jpg?raw=true)
+
 ```R
 # plot(x, y = NULL, type = "p")
 plot(datum)
