@@ -386,7 +386,7 @@ Genera scatterplots de un objeto
 ![plot() example](https://github.com/Saigesp/r-training/blob/master/_media/root-scatterplot.jpg?raw=true)
 
 ```R
-# plot(x, y = NULL, type = "p")
+# plot(x, y = NULL, type = "p", ...)
 plot(datum)
 plot(datum$first_date, datum$last_date)
 ```
