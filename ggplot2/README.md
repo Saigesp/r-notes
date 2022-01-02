@@ -16,6 +16,7 @@ Inicializa un objeto ggplot para añadirle componentes.
 ```R
 # ggplot(data = NULL, mapping = aes(), ...)
 ggplot(data, aes(data$year, data$cost))
+ggplot(data, aes(year, cost)) # Better
 ```
 > Por sí solo no muestra nada
 
@@ -27,7 +28,7 @@ Crea un scatterplot sobre un objeto ggplot.
 
 ```R
 # geom_point(mapping = NULL, data = NULL, ...)
-ggplot(data, aes(data$year, data$cost)) + geom_point()
+ggplot(data, aes(year, cost)) + geom_point()
 ```
 
 ### geom_smooth()
@@ -38,5 +39,16 @@ Muestra posibles patrones.
 
 ```R
 # geom_smooth(mapping = NULL, data = NULL, stat = "smooth", ...)
-ggplot(data, aes(data$year, data$cost)) + geom_point() + geom_smooth()
+ggplot(data, aes(year, cost)) + geom_point() + geom_smooth()
+```
+
+### geom_boxplot()
+
+Crea un boxplot sobre un objeto ggplot.
+
+![geom_boxplot() example](https://github.com/Saigesp/r-training/blob/master/_media/ggplot2-geom_boxplot.jpg?raw=true)
+
+```R
+# geom_boxplot(mapping = NULL, data = NULL, ...)
+ggplot(data, aes(genre, year)) + geom_boxplot()
 ```
