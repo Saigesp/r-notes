@@ -30,7 +30,7 @@ Crea un scatterplot sobre un objeto ggplot.
 ggplot(data, aes(data$year, data$cost)) + geom_point()
 ```
 
-### geom_smooth
+### geom_smooth()
 
 Muestra posibles patrones.
 
