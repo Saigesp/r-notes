@@ -9,11 +9,11 @@ install.packages("readxl")
 library(readxl)
 ```
 
-#### excel_sheets()
+### excel_sheets()
 
 Listar las hojas del excel
 
-#### read_excel()
+### read_excel()
 
 Importar datos desde excel a un objeto **tibble** (dataframe con esteroides).
 

@@ -9,7 +9,7 @@ install.packages("readr")
 library(readr)
 ```
 
-#### read_delim()
+### read_delim()
 
 Importar datos de un archivo tabular. https://readr.tidyverse.org/reference/read_delim.html
 
@@ -31,14 +31,14 @@ hotdogs <- read_tsv("hotdogs.txt",
 
 ```
 
-#### read_csv()
+### read_csv()
 
 ```R
 # read_csv(file, col_names = TRUE, col_types = NULL, ...)
 movies <- read_csv('movies.csv')
 ```
 
-#### read_tsv()
+### read_tsv()
 
 ```R
 # read_tsv(file, col_names = TRUE, col_types = NULL, ...)

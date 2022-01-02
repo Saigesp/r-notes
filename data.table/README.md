@@ -9,7 +9,7 @@ install.packages("data.table")
 library(data.table)
 ```
 
-#### fread()
+### fread()
 
 Similar a read.table pero más rápido y cómodo: https://www.rdocumentation.org/packages/data.table/versions/1.14.2/topics/fread
 

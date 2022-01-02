@@ -4,7 +4,7 @@ Notas y apuntes de R mientras voy aprendiendo. Puede que lo elimine en el futuro
 
 ## Ayuda
 
-#### ?
+### ?
 
 Consulta información sobre una función
 
@@ -13,7 +13,7 @@ Consulta información sobre una función
 ?gsub
 ```
 
-#### str()
+### str()
 
 Obtener información de la estructura de una variable
 
@@ -22,7 +22,7 @@ Obtener información de la estructura de una variable
 str(var)
 ```
 
-#### summary()
+### summary()
 
 Obtener información de una variable dependiendo de su clase
 
@@ -31,7 +31,7 @@ Obtener información de una variable dependiendo de su clase
 summary(var)
 ```
 
-#### head()
+### head()
 
 Devuelve las primeras filas de un objeto
 
@@ -40,7 +40,7 @@ Devuelve las primeras filas de un objeto
 head(var)
 ```
 
-#### tail()
+### tail()
 
 Devuelve las últimas filas de un objeto
 
@@ -49,7 +49,7 @@ Devuelve las últimas filas de un objeto
 tail(var)
 ```
 
-#### system.time()
+### system.time()
 
 Consulta el uso de la CPU de una expresión
 
@@ -60,7 +60,7 @@ system.time(seq(5e8, 1, -2))
 
 ## Funciones para imprimir por consola
 
-#### print()
+### print()
 
 Imprime por pantalla
 
@@ -69,7 +69,7 @@ Imprime por pantalla
 print('hola')
 ```
 
-#### paste()
+### paste()
 
 Concatena valores (y convierte a strings)
 
@@ -80,7 +80,7 @@ paste('hola', 'mundo')
 
 ## Comparación de valores
 
-#### identical()
+### identical()
 
 Compara dos valores
 
@@ -90,7 +90,7 @@ identical(1, 2) # FALSE
 identical(c("a","b"), sort(c('b', 'a'))) # TRUE
 ```
 
-#### is.list()
+### is.list()
 
 Comprueba si un valor es una lista
 
@@ -103,7 +103,7 @@ is.list(c(1, 2, 3)) # FALSE
 
 ## Utilidades matemáticas
 
-#### abs()
+### abs()
 
 Valor absoluto
 
@@ -113,7 +113,7 @@ abs(-20) # 20
 abs(c(-1, -2, 3)) # 1 2 3
 ```
 
-#### round()
+### round()
 
 Redondear valores
 
@@ -124,7 +124,7 @@ round(1.39, 1) # 1.3
 round(c(1.1, 2.5, 3.9)) # 1 2 4
 ```
 
-#### ceiling()
+### ceiling()
 
 Redondear valores al entero superior
 
@@ -134,7 +134,7 @@ ceiling(1.4) # 2
 ceiling(c(1.4, 2.0)) # 2 2
 ```
 
-#### floor()
+### floor()
 
 Redondear valores al entero inferior
 
@@ -144,7 +144,7 @@ floor(1.8) # 1
 floor(c(1.4, 2.9)) # 1 2
 ```
 
-#### sum()
+### sum()
 
 Sumar valores
 
@@ -154,7 +154,7 @@ sum(1, 4, 5) # 10
 sum(c(1, 4, 5)) # 10
 ```
 
-#### mean()
+### mean()
 
 Calcular media (average)
 
@@ -165,7 +165,7 @@ mean(c(2, 4, 6)) # 4
 
 ## Funciones para estructuras de datos
 
-#### seq()
+### seq()
 
 Generar secuencia de datos
 
@@ -175,7 +175,7 @@ seq(1, 5) # 1 2 3 4 5
 seq(5, 1, -2) # 5 3 1
 ```
 
-#### rep()
+### rep()
 
 Replica los valores de x (vector o lista normalmente)
 
@@ -186,7 +186,7 @@ rep(c(1, 2, 3), times=2) # 1 2 3 1 2 3
 rep(c(1, 2, 3), each=2) # 1 1 2 2 3 3
 ```
 
-#### sort()
+### sort()
 
 Ordena los valores de x
 
@@ -197,7 +197,7 @@ sort(c(3,1,2), decreasing=TRUE) # 3 2 1
 sort(c('lorem', 'ipsum', 'dolor')) # "dolor" "ipsum" "lorem"
 ```
 
-#### unlist()
+### unlist()
 
 Convierte una lista a un vector
 
@@ -207,7 +207,7 @@ unlist(list(1, 2, 3)) # 1 2 3
 unlist(list(1, 2, 'a')) # "1" "2" "a"
 ```
 
-#### append()
+### append()
 
 Añade elementos a un vector
 
@@ -217,7 +217,7 @@ append(c(1, 2), 3) # 1 2 3
 append(c(1, 2), c(3, 4)) # 1 2 3 4
 ```
 
-#### rev()
+### rev()
 
 Invierte el orden del elemento
 
@@ -228,7 +228,7 @@ rev(c(1, 2, 3)) # 3 2 1
 
 ## Expresiones regulares
 
-#### grep()
+### grep()
 
 Devuelve las posiciones del vector/lista que hacen match
 
@@ -237,7 +237,7 @@ Devuelve las posiciones del vector/lista que hacen match
 grep('a', c("gato", "perro", "caballo")) # 1 3
 ```
 
-#### grepl()
+### grepl()
 
 Devuelve un vector lógico con los matchs
 
@@ -246,7 +246,7 @@ Devuelve un vector lógico con los matchs
 grepl('a', c("gato", "perro", "caballo")) # TRUE FALSE TRUE
 ```
 
-#### sub()
+### sub()
 
 Substituye strings con expresiones regulares (solo primer match de cada item)
 
@@ -255,7 +255,7 @@ Substituye strings con expresiones regulares (solo primer match de cada item)
 sub('a', 'A', c("gato", "perro", "caballo")) # "gAto" "perro" "cAballo"
 ```
 
-#### gsub()
+### gsub()
 
 Substituye strings con expresiones regulares (global)
 
@@ -266,7 +266,7 @@ gsub('a', 'A', c("gato", "perro", "caballo")) # "gAto" "perro" "cAbAllo"
 
 ## Fecha y tiempo
 
-#### Sys.Date()
+### Sys.Date()
 
 Devuelve la fecha del sistema
 
@@ -274,7 +274,7 @@ Devuelve la fecha del sistema
 Sys.Date() # "2021-12-30"
 ```
 
-#### Sys.time()
+### Sys.time()
 
 Devuelve la fecha y hora del sistema
 
@@ -282,7 +282,7 @@ Devuelve la fecha y hora del sistema
 Sys.time() # "2021-12-30 15:03:32 CET"
 ```
 
-#### as.Date()
+### as.Date()
 
 Genera fecha con el string introducido
 
@@ -293,7 +293,7 @@ as.Date('30-12-2021', format='%d-%m-%Y') # "2021-11-30"
 as.Date(c('21-12-01', '21-12-02'), '%y-%m-%d') # "2021-12-01" "2021-12-02"
 ```
 
-#### as.POSIXct
+### as.POSIXct
 
 Genera fecha y hora con string introducido
 
@@ -303,7 +303,7 @@ as.POSIXct('2021-12-30 12:12:60') "2021-12-30 12:13:00 CET"
 ```
 > Módulos útiles para trabajar con fechas: `lubridate`, `zoo`, `xts`
 
-#### format()
+### format()
 
 Formatear objeto
 
@@ -317,7 +317,7 @@ format(c(as.Date('2021-12-25'), as.Date('2021-12-26')), '%d') "25" "26"
 
 Funciones para aplicar sobre iterables
 
-#### lapply()
+### lapply()
 
 Aplica una función a un iterable y devuelve una **lista**
 
@@ -326,7 +326,7 @@ Aplica una función a un iterable y devuelve una **lista**
 low_pioners <- lapply(pioneers, tolower)
 ```
 
-#### sapply()
+### sapply()
 
 Aplica una función a un iterable y devuelve una lista/vector **simplificado**
 
@@ -335,7 +335,7 @@ Aplica una función a un iterable y devuelve una lista/vector **simplificado**
 sapply(pioneers, function(x) { nchar(x) + 1 })
 ```
 
-#### vapply()
+### vapply()
 
 Aplica una función a un iterable y devuelve un **vector** con formato definido
 
@@ -348,7 +348,7 @@ vapply(temp, basics, FUN.VALUE=numeric(3))
 
 ## Importar datos
 
-#### read.csv()
+### read.csv()
 
 Importar datos de un csv como data.frame
 
@@ -358,7 +358,7 @@ movies <- read.csv('movies.csv')
 actors <- read.csv(file.path('~', 'repo', 'actors.csv'))
 ```
 
-#### read.delim()
+### read.delim()
 
 Importar datos de un csv separado por otros caractéres
 
@@ -367,7 +367,7 @@ Importar datos de un csv separado por otros caractéres
 movies <- read.delim('movies.csv', sep=";")
 ```
 
-#### read.table()
+### read.table()
 
 Importar datos de un archivo tabular
 
@@ -379,7 +379,7 @@ movies <- read.table('movies.csv', sep=";", fileEncoding="latin-1")
 
 ## Previsualizar datos
 
-#### plot()
+### plot()
 
 Genera scatterplots de un objeto
 
@@ -392,7 +392,7 @@ plot(datum$first_date, datum$last_date)
 ```
 > `type` es el tipo de gráfico que debe dibujar: **l**ineas, **h**istogramas, etc
 
-#### hist()
+### hist()
 
 Genera un histogramas de un vector
 
@@ -405,7 +405,7 @@ hist(data$total_expenses)
 
 ## Generar imágenes
 
-#### jpeg()
+### jpeg()
 
 Genera una imagen JPEG del output. Debe llamar a `dev.off()` para generar la imagen:
 
