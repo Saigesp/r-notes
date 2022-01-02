@@ -28,7 +28,7 @@ Crea un scatterplot sobre un objeto ggplot.
 
 ```R
 # geom_point(mapping = NULL, data = NULL, ...)
-ggplot(data, aes(year, cost)) + geom_point()
+ggplot(data, aes(year, years)) + geom_point()
 ```
 
 ### geom_smooth()
@@ -39,7 +39,7 @@ Muestra posibles patrones.
 
 ```R
 # geom_smooth(mapping = NULL, data = NULL, stat = "smooth", ...)
-ggplot(data, aes(year, cost)) + geom_point() + geom_smooth()
+ggplot(data, aes(year, years)) + geom_point() + geom_smooth()
 ```
 
 ### geom_boxplot()
