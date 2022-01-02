@@ -415,3 +415,4 @@ jpeg('test.jpg', width=800)
 hist(data$total_expenses)
 dev.off()
 ```
+> También existen las funciones `png`, `bmp` y `tiff`
