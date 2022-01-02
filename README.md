@@ -394,6 +394,8 @@ plot(datum$first_date, datum$last_date)
 
 Genera un histogramas de un vector
 
+![hist() example](https://github.com/Saigesp/r-training/blob/master/_media/root-histogram.jpg?raw=true)
+
 ```R
 # hist(x, ...)
 hist(data$total_expenses)
