@@ -376,3 +376,38 @@ Importar datos de un archivo tabular
 movies <- read.table('movies.csv', sep=";", fileEncoding="latin-1")
 ```
 > Módulos útiles: [readr](/readr/README.md), [data.table](/data.table/README.md), [readxl](/readxl/README.md)
+
+## Previsualizar datos
+
+#### plot()
+
+Genera scatterplots de un objeto
+
+```R
+# plot(x, y = NULL, type = "p")
+plot(datum)
+plot(datum$first_date, datum$last_date)
+```
+> `type` es el tipo de gráfico que debe dibujar: **l**ineas, **h**istogramas, etc
+
+#### hist()
+
+Genera un histogramas de un vector
+
+```R
+# hist(x, ...)
+hist(data$total_expenses)
+```
+
+## Generar imágenes
+
+#### jpeg()
+
+Genera una imagen JPEG del output. Debe llamar a `dev.off()` para generar la imagen:
+
+```R
+# jpeg(filename, width = 480, height = 480, ...)
+jpeg('test.jpg', width=800)
+hist(data$total_expenses)
+dev.off()
+```
