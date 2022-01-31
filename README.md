@@ -22,6 +22,15 @@ Obtener información de la estructura de una variable
 str(var)
 ```
 
+### as.numeric()
+
+Convertir string a número
+
+```R
+# as.numeric(string)
+as.numeric("12")
+```
+
 ### summary()
 
 Obtener información de una variable dependiendo de su clase
@@ -226,6 +235,24 @@ Invierte el orden del elemento
 rev(c(1, 2, 3)) # 3 2 1
 ```
 
+### all()
+
+Comprueba si todos los elementos de un vector cumplen la condición
+
+```R
+elements <- c(2, 4, 5)
+all(elements > 3)
+```
+
+### any()
+
+Comprueba si alguno de los elementos de un vector cumplen la condición
+
+```R
+elements <- c(2, 4, 5)
+any(elements > 3)
+```
+
 ## Expresiones regulares
 
 ### grep()
@@ -262,6 +289,69 @@ Substituye strings con expresiones regulares (global)
 ```R
 # gsub(pattern, replacement, x, ignore.case = FALSE, ...)
 gsub('a', 'A', c("gato", "perro", "caballo")) # "gAto" "perro" "cAbAllo"
+```
+
+## Matrices
+
+### matrix()
+
+Generar metrices "vacías"
+
+```R
+matrix(0, nrow=3, ncol=4) # Matriz 4x3 de 0s
+
+matrix(1:12, nrow = 4) 
+#      [,1] [,2] [,3]
+# [1,]    1    5    9
+# [2,]    2    6   10
+# [3,]    3    7   11
+# [4,]    4    8   12
+```
+
+### colnames()
+
+Mostrar nombres de las columnas de una matriz
+
+```R
+colnames(my_matrix)
+```
+
+### cbind()
+
+Combinar columnas en una matriz
+
+```R
+estaturas <- c(10, 20, 30, 40)
+pesos <- c(32, 32, 54, 18)
+matrix < cbind(estaturas, pesos)
+# > matrix
+#      estaturas pesos
+# [1,]  10       32
+# [2,]  20       32
+# [3,]  30       54
+# [4,]  40       18
+
+lorem <- c(1,2,3,4)
+> cbind(ma, lorem)
+#      estatura pesos lorem
+# [1,]  10         32     1
+# [2,]  20         32     2
+# [3,]  30         54     3
+# [4,]  40         18     4
+```
+
+### rbind()
+
+Combinar filas en una matriz
+
+```R
+estaturas <- c(10, 20, 30, 40)
+pesos <- c(32, 32, 54, 18)
+matrix < rbind(estaturas, pesos)
+# > matrix
+#           [,1] [,2] [,3] [,4]
+# estaturas   10   20   30   40
+# pesos       32   32   54   18
 ```
 
 ## Fecha y tiempo
@@ -316,6 +406,36 @@ format(c(as.Date('2021-12-25'), as.Date('2021-12-26')), '%d') "25" "26"
 ## lapply, sapply y vapply
 
 Funciones para aplicar sobre iterables
+
+### apply()
+
+```R
+# apply(matrix, MARGIN, FUN, ...)
+apply(mi_matriz, MARGIN=2, FUN=mean, na.rm=TRUE)
+
+matriz <- matrix(1:12, nrow = 4) 
+matriz
+#      [,1] [,2] [,3]
+# [1,]    1    5    9
+# [2,]    2    6   10
+# [3,]    3    7   11
+# [4,]    4    8   12
+
+# Suma por columnas
+suma_por_columnas <- apply(matriz, MARGIN = 1, FUN = "sum")
+
+# Media total
+mean(matriz)
+# [1] 6.5
+
+# Media por filas
+apply(matriz, 1, mean)
+# [1] 5 6 7 8
+
+# Media por columnas
+apply(matriz, 2, mean)
+# [1]  2.5  6.5 10.5
+```
 
 ### lapply()
 
