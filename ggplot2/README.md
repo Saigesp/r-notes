@@ -96,4 +96,4 @@ ggplot(gapminder_1997, aes(x = lifeExp, y = gdpPercap))+ geom_point() + facet_wr
 ```R
 ggplot(gapminder_1997, aes(x = lifeExp, y = gdpPercap, color=continent))+ geom_point(alpha=0.5) + scale_y_log10() + labs(title="title here", caption="this is a caption", subtitle="lorem ipsum")
 ```
-![geom_boxplot() example](https://github.com/Saigesp/r-training/blob/master/_media/ggplot2-labs.png?raw=true)
+![geom_boxplot() example](https://github.com/Saigesp/r-training/blob/master/_media/ggplot2-lab.png?raw=true)
