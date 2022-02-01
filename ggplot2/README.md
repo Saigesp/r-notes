@@ -97,3 +97,27 @@ ggplot(gapminder_1997, aes(x = lifeExp, y = gdpPercap))+ geom_point() + facet_wr
 ggplot(gapminder_1997, aes(x = lifeExp, y = gdpPercap, color=continent))+ geom_point(alpha=0.5) + scale_y_log10() + labs(title="title here", caption="this is a caption", subtitle="lorem ipsum")
 ```
 ![geom_boxplot() example](https://github.com/Saigesp/r-training/blob/master/_media/ggplot2-lab.png?raw=true)
+
+
+```R
+data <- starwars %>% drop_na(mass, height, eye_color) %>% filter(mass < 1000) %>% mutate(
+    eye_color=case_when(
+        eye_color=='blue-gray' ~ 'blue',
+        eye_color=='hazel' ~ 'brown',
+        eye_color=='green, yellow' ~ 'green',
+        eye_color=='unknow' ~ 'grey',
+        TRUE ~ eye_color
+    )
+
+ggplot(data), aes(x=height, y=mass, size=mass, color=eye_color)) +
+geom_point(alpha=0.6) +
+guides(size='none') +
+labs(ç
+    eye_color='Color de ojos',
+    title="Título",
+    subtitle="Subtítulo",
+    caption="No mires abajo") +
+scale_x_continuous(breaks=seq(60, 240, by=30)) +
+scale_y_continuous(seq(20, 160, 20))
+```
+![geom_boxplot() example](https://github.com/Saigesp/r-training/blob/master/_media/ggplot2-all-example.png?raw=true)
