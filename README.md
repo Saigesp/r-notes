@@ -99,6 +99,16 @@ identical(1, 2) # FALSE
 identical(c("a","b"), sort(c('b', 'a'))) # TRUE
 ```
 
+### is.na()
+
+Comprueba si un valor es NA
+
+```R
+# is.na(x)
+is.na(2) # FALSE
+is.na(NA) # TRUE
+```
+
 ### is.list()
 
 Comprueba si un valor es una lista
@@ -253,6 +263,15 @@ elements <- c(2, 4, 5)
 any(elements > 3)
 ```
 
+### duplicated()
+
+Muestra los valores duplicados
+
+```R
+duplicated(c(1,2,3,4,3))
+# [1] FALSE FALSE FALSE FALSE  TRUE
+```
+
 ## Expresiones regulares
 
 ### grep()
@@ -352,6 +371,14 @@ matrix < rbind(estaturas, pesos)
 #           [,1] [,2] [,3] [,4]
 # estaturas   10   20   30   40
 # pesos       32   32   54   18
+```
+
+### View()
+
+Muestra una matriz/dataframe en un visor hoja de cálculo
+
+```R
+View(my_matrix)
 ```
 
 ## Fecha y tiempo

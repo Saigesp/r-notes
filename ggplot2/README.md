@@ -20,6 +20,8 @@ ggplot(data, aes(year, cost)) # Better
 ```
 > Por sí solo no muestra nada
 
+## Geometrias
+
 ### geom_point()
 
 Crea un scatterplot sobre un objeto ggplot.
@@ -52,3 +54,46 @@ Crea un boxplot sobre un objeto ggplot.
 # geom_boxplot(mapping = NULL, data = NULL, ...)
 ggplot(data, aes(genre, year)) + geom_boxplot()
 ```
+
+### scale_color_brewer()
+
+Escalas de colors brewer
+
+```R
+# scale_color_brewer(palette, ...)
+ggplot(gapminder_1997, aes(x = lifeExp, y = gdpPercap, color=continent))+ geom_point() + scale_color_brewer(palette='Spectral')
+```
+> Más escalas de colores instalando el package `ggthemes`, como `scale_color_tableau()`
+
+
+### scale_color_manual()
+
+Mapea la escala de color manualmente
+
+```R
+# scale_color_manual(values, ...)
+ggplot(gapminder_1997, aes(x = lifeExp, y = gdpPercap, color=continent))+ geom_point(alpha=0.5) + scale_color_manual(values = c('red', 'blue', 'purple', 'green', 'orange'))
+```
+
+### scale_y_log10()
+
+Aplicar escala logarítmica
+
+```R
+ggplot(gapminder_1997, aes(x = lifeExp, y = gdpPercap, color=continent, size=pop))+ geom_point() + scale_y_log10()
+```
+
+## Facets
+
+(~Multiples gráficos separados por 1 dimensión)
+
+```R
+ggplot(gapminder_1997, aes(x = lifeExp, y = gdpPercap))+ geom_point() + facet_wrap(~continent)
+```
+
+## Labels
+
+```R
+ggplot(gapminder_1997, aes(x = lifeExp, y = gdpPercap, color=continent))+ geom_point(alpha=0.5) + scale_y_log10() + labs(title="title here", caption="this is a caption", subtitle="lorem ipsum")
+```
+![geom_boxplot() example](https://github.com/Saigesp/r-training/blob/master/_media/ggplot2-labs.png?raw=true)
