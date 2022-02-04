@@ -1,0 +1,382 @@
+---
+title: "Lo que cuentan los datos de contaminación de Madrid"
+author: "Victòria Oliveres (elDiario.es)"
+date: "3 feb 2022"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE) 
+```
+
+<style>
+
+body {
+  font-family: Roboto;
+  font-size: 14px;
+}
+
+pre {
+  background-color: #f0f3f5;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+h1.title {
+  color: #005695;
+  font-family: Roboto;
+  font-size: 30px;
+}
+
+h4.author {
+  color: #005695;
+  font-family: Roboto;
+}
+
+h4.date {
+  color: #005695;  
+  font-family: Roboto;
+}
+
+</style>
+
+En esta Notebook vamos a construir un flujo de trabajo para extraer historias de una base de datos. Vamos a realizar todo el proceso usando R y RStudio. 
+
+Las dos premisas básicas de este trabajo van a ser *basar el análisis en una pregunta o hipótesis inicial* y *programar un código reproducible*, para poder repetir el proceso sin esfuerzo siempre que tengamos nuevos datos.
+
+Los pasos a seguir, desde los datos a la historia, serán:
+
+* La obtención
+* La hipótesis o pregunta
+* La unión
+* La transformación
+* La limpieza
+* El análisis
+* La visualización 
+
+En concreto usaremos los datos diarios de **calidad del aire**, una base de datos con los valores medios de los niveles de contaminación atmosférica recogidos en distintas estaciones de la ciudad de Madrid que publica de forma abierta el [Ayuntamiento de Madrid](https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=aecb88a7e2b73410VgnVCM2000000c205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD&vgnextfmt=default).
+
+
+## Obtención
+
+Los datos del portal del Ayuntamiento se publican en distintos formatos. El más práctico para nosotros será CSV. Como muchas veces usando R, existen muchas formas de importar un CSV. La función recomendada para descargarlo seria **read_csv()**, de la librería *readr*, preferible frente a la función base **read.csv()**.
+
+Si lo descargamos primero podemos ver, sin embargo, que los separadores no son comas *(,)* sino punto y coma *(;)*. Este es un formato usado a menudo cuando se trata de datos en español, para no confundir la coma del separador con la coma decimal. Por eso tendremos que utilizar la función **read_csv2()**, también de *readr*. 
+
+```{r}
+#Forma parte de *tidyverse*
+library(readr)
+library(tibble)
+library(dplyr)
+```
+
+```{r}
+#Ver información de la función
+#help("read_csv2")
+```
+
+Cómo cada año tiene su propio *dataframe* lo importamos individualmente pegando el enlace y lo asignamos a un objeto.
+
+```{r}
+#Anualmente importamos los datos de 2017-2021
+aire2021 <- read_csv2("https://datos.madrid.es/egob/catalogo/201410-10306612-calidad-aire-diario.csv")
+aire2020 <- read_csv2("https://datos.madrid.es/egob/catalogo/201410-10306609-calidad-aire-diario.csv")
+aire2019 <- read_csv2("https://datos.madrid.es/egob/catalogo/201410-10306606-calidad-aire-diario.csv")
+aire2018 <- read_csv2("https://datos.madrid.es/egob/catalogo/201410-7775096-calidad-aire-diario.csv")
+aire2017 <- read_csv2("https://datos.madrid.es/egob/catalogo/201410-7775098-calidad-aire-diario.csv")
+```
+
+Una forma alternativa es descargar los datos y usar un **loop** para descargar cada archivo sin tener que escribir cada vez la función de importación. **Es importante que los nombres de los archivos compartan una estructura.**
+
+```{r}
+#creamos un vector con el nombre de los archivos a importar
+archivos <- list.files(path = "./Datos/", pattern=".csv")
+
+#creamos una tabla vacía
+aire <- tibble()
+
+#para **(for)** cada elemento **i** del vector archivos, repite las funciones de entre {}
+for (i in archivos) {
+  
+  #importa el archivo, uniendo la ruta y el nombre de archivo
+  aire_year <- read_csv2(paste0("./Datos/", i))
+  
+  #une el archivo del año al vacío o a los anteriores
+  aire <- bind_rows(aire, aire_year)
+}
+```
+
+
+En este caso las tablas tienen una columna que las identifica, la columna **ANO**. A veces, cuando importamos diferentes archivos tienen el identificador del año, del municipio..., en el nombre del archivo. Vamos a incorporarlo como columna durante el loop.
+
+```{r}
+archivos <- list.files(path = "./Datos/", pattern=".csv")
+
+aire_withyear <- tibble()
+
+for (i in archivos) {
+  aire_year <- read_csv2(paste0("./Datos/", i))
+  
+  #añadimos una columna con el año, substrayéndolo del nombre del archivo
+  aire_year$year <- substr(i, 6, 9)
+  
+  aire_withyear <- bind_rows(aire_withyear, aire_year)
+}
+```
+
+
+## Hipótesis o pregunta
+ 
+Para poder plantear una idea, primero tenemos que saber cómo es la base de datos. Buscamos información en [los metadatos](https://datos.madrid.es/FWProjects/egob/Catalogo/MedioAmbiente/Aire/Ficheros/Interprete_ficheros_%20calidad_%20del_%20aire_global.pdf).
+
+La columna *MAGNITUD* nos indica qué contaminante se está midiendo. Vamos a ver la evolución del NO2:
+
+* **08** Dióxido de Nitrógeno NO2 µg/m 3
+
+La columna *ESTACIÓN* nos indica en qué punto se están midiendo los contaminantes. Vemos en los metadatos que se usa la combinación de provincia (28) + municipio (079) + estación (tres cifras). Las estaciones escogidas para este análisis son:
+
+* **28079024** Casa de Campo -> ESTACIÓN 24
+* **28079035** Pza. del Carmen -> ESTACIÓN 35
+* **28079056** Plaza Elíptica -> ESTACIÓN 56
+
+Con esta información, vamos a plantearnos dos preguntas:
+
+* ¿Cómo ha evolucionado la contaminación por NO2 en la Plaza Elíptica durante el año 2021?
+* ¿Cuál es la diferencia de contaminación por NO2 respecto a las otras dos estaciones en el último mes disponible?
+
+
+## Unión
+
+Revisamos que todos los dataframes tengan la misma estructura de columnas y lo juntamos en uno de solo para poder realizar el análisis. **Es importante que incluya una columna con la variable de la fecha o el año**.
+
+```{r}
+aire <- bind_rows(aire2017, aire2018, aire2019, aire2020, aire2021)
+```
+
+Dentro del loop ya hemos hecho este proceso, así que no lo tendríamos que repetir.
+
+
+## Transformación y limpieza
+
+Para poder analizar los datos necesitamos hacer algunos cambios en la forma en la que vienen los datos. 
+
+Primero filtraremos para quedarnos solo con la información que nos interesa (la magnitud y las estaciones elegidas).
+
+```{r}
+#Forma parte de *tidyverse*
+library(tidyr)
+```
+
+```{r}
+aire_no2 <- aire %>% 
+  filter(MAGNITUD==8, 
+         ESTACION %in% c(24, 56, 35))
+```
+
+
+Una cosa especial de esta base de datos es que, mientras todas las variables se muestran en vertical (ESTACIÓN, MAGNITUD, AÑO, MES...) los días están en horizontal: cada día es una columna. Para facilitar nuestro análisis tendremos que transformar el dataframe de *WIDE* a *LONG*, con todos los días uno debajo del otro en una única columna e igual con los valores, en otra columna. Así tendremos una **observación** para cada día, estación y magnitud.
+
+Por otra parte, vemos que esta base de datos añade para cada día una columna de verificación. En los metadatos se explica que 'ÚNICAMENTE SON VÁLIDOS LOS DATOS QUE LLEVAN EL CÓDIGO DE VALIDACIÓN "V"'.
+
+Vamos a separar los datos de la verificación para pasarlo de WIDE a LONG. 
+
+```{r}
+aire_no2_datos <- aire_no2 %>% 
+  
+  #Selecciona todas las columnas que no empiezen por 'V'
+  select(!starts_with("V")) %>%
+  
+  #Los nombres de las columnas que empiezen por 'D', los metemos en la columna 'DIA' y los valores, en 'DATO' 
+  pivot_longer(starts_with("D"), names_to = "DIA", values_to = "DATO") %>%
+  
+  #transformamos a numericas algunas columnas
+  mutate(DIA=as.integer(gsub("D", "", DIA)),
+         MES=as.integer(MES),
+         DATO=as.integer(DATO),
+         
+         #creamos una columna con la fecha entera
+         FECHA=as.Date(paste(ANO, MES, DIA, sep="-"))) %>%
+  
+  #nos quedamos solo con las columnas necesarias
+  select(ESTACION, PUNTO_MUESTREO, ANO, MES, DIA, DATO, FECHA)
+```
+
+
+```{r}
+#Repetimos el proceso para los datos de verificación
+
+aire_no2_verificacion <- aire_no2 %>% select(!starts_with("D")) %>%
+  pivot_longer(starts_with("V"), names_to = "DIA", values_to = "VERIF") %>%
+  mutate(DIA=as.integer(gsub("V", "", DIA)),
+         MES=as.integer(MES),
+         FECHA=as.Date(paste(ANO, MES, DIA, sep="-"))) %>%
+  select(ESTACION, PUNTO_MUESTREO, ANO, MES, DIA, VERIF, FECHA)
+```
+
+
+Unimos los datos de ambas, en este caso unimos columnas y no filas. 
+
+```{r}
+aire_no2 <- full_join(aire_no2_datos, aire_no2_verificacion)
+```
+
+Con pivot_wider se nos crean días inexistentes (30 de febrero) pero ahora filtraremos estas fechas, junto a las que son inválidas.
+
+```{r}
+aire_no2 <- aire_no2 %>% 
+  
+  #creamos una columna que solo se quede los valores de las fechas que tengan 'V' en la columna VERIF
+  mutate(VALOR=if_else(VERIF=="V", DATO, NA_integer_)) %>%
+  
+  #filtramos las que no son NA
+  filter(!is.na(VALOR)) %>% 
+  
+  #quitamos las que no nos interesan
+  select(-DATO, -VERIF)
+```
+
+
+## Análisis
+
+En este momento ya tenemos los datos bien organizados y limpios y podemos empezar a responder las preguntas.
+Las dividiremos en 4 preguntas más concretas.
+
+**¿Cuál ha sido la media mensual de contaminación en las estaciones?**
+
+```{r}
+aire_no2_media_mensual <- aire_no2 %>%
+  
+  #creamos variable con AÑO y MES
+  mutate(ANO_MES = as.Date(paste(ANO, MES, 1, sep="-"))) %>%
+  
+  #agrupamos 
+  group_by(ANO_MES, ESTACION) %>%
+  
+  #operamos con cada uno de los valores de dentro de la agrupación. Una media para cada estación y ano_mes 
+  summarise(MEDIA_MENSUAL = mean(VALOR, na.rm = T))
+```
+
+**¿Cuánto ha aumentado/caído la contaminación en cada estación entre diciembre de 2020 y diciembre de 2021?**
+
+```{r}
+aire_no2_media_mensual <- aire_no2_media_mensual %>%
+  group_by(ESTACION) %>% 
+  #la funcion lag() devuelve el valor de la fila anterior
+  mutate(VAR_MENSUAL = (MEDIA_MENSUAL-lag(MEDIA_MENSUAL))/lag(MEDIA_MENSUAL)*100)
+```
+
+
+**¿Cuál ha sido la estación que ha registrado más contaminación en diciembre de 2021?**
+
+```{r}
+aire_no2_122021 <- aire_no2_media_mensual %>% filter(ANO_MES=="2021-12-01")
+```
+
+
+**¿Cuál ha sido la diferencia entre la Casa de Campo y la Plaza Elíptica?**
+
+```{r}
+#Extraemos un solo valor
+casadecampo_122021 <- (aire_no2_122021 %>% filter(ESTACION==24))$MEDIA_MENSUAL
+plazaeliptica_122021 <- (aire_no2_122021 %>% filter(ESTACION==56))$MEDIA_MENSUAL
+
+plazaeliptica_122021-casadecampo_122021
+```
+
+
+
+## Visualización
+
+Vamos a publicar los resultados con gráficos de la herramienta de visualización [Datawrapper](https://www.datawrapper.de/) (que tiene [muchos recursos](https://academy.datawrapper.de/) para aprender) directamente desde R usando la librería [DatawRappr](https://github.com/munichrocker/DatawRappr) (consulta [la documentación](https://munichrocker.github.io/DatawRappr/index.html)).
+
+```{r}
+library(DatawRappr)
+```
+
+
+Nos creamos un **token** en nuestra cuenta de Datawrapper.
+
+```{r}
+datawrapper_auth(
+  api_key = "ljiSAwZU86C04IQYqU59N5vhCPTcR5EtPfBCkjNTPri2U0bfIZE4Fp1o1DuoHcOF",
+  overwrite = TRUE)
+```
+
+
+### Gráfico de barras
+
+Visualizamos la media mensual más reciente de la contaminación en esas tres estaciones.
+
+Primero creamos un dataset específicamente con los datos que vayamos a visualizar. En este caso, tenemos que añadir la columna del nombre de la estación y solo queremos esa y la media. Las ordenamos por la columna de media.
+
+```{r}
+aire_no2_122021 <- aire_no2_122021 %>% mutate(
+                          NOMBRE=case_when(ESTACION==24 ~ "Casa de Campo",
+                                           ESTACION==56 ~ "Plaza Elíptica",
+                                           ESTACION==35 ~ "Plaza del Carmen",
+                                           TRUE ~ "Otra")) %>% 
+  ungroup() %>% select(NOMBRE, MEDIA_MENSUAL) %>% arrange(desc(MEDIA_MENSUAL))
+```
+
+```{r}
+#No recomendable, se nos van a crear muchos y no controlamos en qué carpeta se nos crea
+#mi_grafico <- dw_create_chart()
+```
+
+```{r}
+#Subimos los datos al gráfico 
+dw_data_to_chart(aire_no2_122021, "BhPGn")
+
+#Lo editamos
+dw_edit_chart("BhPGn", 
+              
+              #tipo de gráfico
+              type = "d3-bars",
+              
+              #Anotaciones
+              title = "La contaminación en el aire de Madrid", 
+              intro = "Nivel de Dióxido de Nitrógeno (NO2 µg/m3) en tres estaciones de medición de Madrid. Media de los registros diarios de diciembre de 2021", 
+              source_name = "Ayuntamiento de Madrid",
+              source_url = "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=aecb88a7e2b73410VgnVCM2000000c205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD&vgnextfmt=default")
+
+#dw_publish_chart("BhPGn")
+```
+
+### Gráfico de líneas
+
+Visualizamos la contaminación mensual en la estación de Plaza Elíptica. En lugar de una sola línea, vamos a mostrar cada año en una línea, para comparar meses. Por eso necesitamos cada año como columna.
+
+```{r}
+#Librería para fechas
+library(lubridate)
+```
+
+```{r}
+aire_no2_media_mensual_plazaeliptica <- aire_no2_media_mensual %>%
+  filter(ESTACION==56) %>%
+  mutate(ANO=year(ANO_MES),
+         
+         #aunque no sean todos de 2021, necesitamos que lleven la misma fecha para la visualización. Luego ya esconderemos el año en el gráfico
+         MES=paste(2021, month(ANO_MES), 1, sep="-")) %>% ungroup() %>%
+  select(ANO, MES, MEDIA_MENSUAL) %>%
+  pivot_wider(names_from = ANO, values_from =  MEDIA_MENSUAL)
+```
+
+```{r}
+dw_data_to_chart(aire_no2_media_mensual_plazaeliptica, "LpGQJ")
+
+dw_edit_chart("LpGQJ", 
+              type = "d3-lines",
+              title = "Evolución de la contaminación en la Plaza Elíptica", 
+              intro = "Nivel mensual medio de Dióxido de Nitrógeno (NO2 µg/m3) en cada año, registrado en la estación de la Plaza Elíptica de Madrid",
+              source_name = "Ayuntamiento de Madrid",
+              source_url = "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=aecb88a7e2b73410VgnVCM2000000c205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD&vgnextfmt=default")
+
+#dw_publish_chart("LpGQJ")
+```
+

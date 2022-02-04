@@ -1,0 +1,323 @@
+---
+title: 'Lo que cuentan los datos de contaminación de Madrid'
+author: 'Victòria Oliveres (elDiario.es)'
+date: '3 feb 2022'
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE) 
+```
+
+<style>
+
+body {
+  font-family: Roboto;
+  font-size: 14px;
+}
+
+pre {
+  background-color: #f0f3f5;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+h1.title {
+  color: #005695;
+  font-family: Roboto;
+  font-size: 30px;
+}
+
+h4.author {
+  color: #005695;
+  font-family: Roboto;
+}
+
+h4.date {
+  color: #005695;  
+  font-family: Roboto;
+}
+
+</style>
+
+En esta Notebook vamos a construir un flujo de trabajo para extraer historias de una base de datos. Vamos a realizar todo el proceso usando R y RStudio. 
+
+Las dos premisas básicas de este trabajo van a ser *basar el análisis en una pregunta o hipótesis inicial* y *programar un código reproducible*, para poder repetir el proceso sin esfuerzo siempre que tengamos nuevos datos.
+
+Los pasos a seguir, desde los datos a la historia, serán:
+
+* La obtención
+* La hipótesis o pregunta
+* La unión
+* La transformación
+* La limpieza
+* El análisis
+* La visualización 
+
+En concreto usaremos los datos diarios de **calidad del aire**, una base de datos con los valores medios de los niveles de contaminación atmosférica recogidos en distintas estaciones de la ciudad de Madrid que publica de forma abierta el [Ayuntamiento de Madrid](https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=aecb88a7e2b73410VgnVCM2000000c205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD&vgnextfmt=default).
+
+
+## Obtención
+
+Los datos del portal del Ayuntamiento se publican en distintos formatos. El más práctico para nosotros será CSV. Como muchas veces usando R, existen muchas formas de importar un CSV. La función recomendada para descargarlo seria **read_csv()**, de la librería *readr*, preferible frente a la función base **read.csv()**.
+
+Si lo descargamos primero podemos ver, sin embargo, que los separadores no son comas *(,)* sino punto y coma *(;)*. Este es un formato usado a menudo cuando se trata de datos en español, para no confundir la coma del separador con la coma decimal. Por eso tendremos que utilizar la función **read_csv2()**, también de *readr*. 
+
+```{r}
+#Forman parte de *tidyverse*
+
+```
+
+```{r}
+#Ver información de la función
+#help("read_csv2")
+```
+
+Cómo cada año tiene su propio *dataframe* lo importamos individualmente pegando el enlace y lo asignamos a un objeto.
+
+```{r}
+#Anualmente importamos los datos de 2017-2021
+
+```
+
+Una forma alternativa es descargar los datos y usar un **loop** para descargar cada archivo sin tener que escribir cada vez la función de importación. **Es importante que los nombres de los archivos compartan una estructura.**
+
+```{r}
+#creamos un vector con el nombre de los archivos a importar
+
+
+#creamos una tabla vacía
+
+
+#para **(for)** cada elemento **i** del vector archivos, repite las funciones de entre {}
+
+  
+  #importa el archivo, uniendo la ruta y el nombre de archivo
+
+  
+  #une el archivo del año al vacío o a los anteriores
+
+
+```
+
+
+En este caso las tablas tienen una columna que las identifica, la columna **ANO**. A veces, cuando importamos diferentes archivos tienen el identificador del año, del municipio..., en el nombre del archivo. Vamos a incorporarlo como columna durante el loop.
+
+```{r}
+
+  
+  #añadimos una columna con el año, substrayéndolo del nombre del archivo
+
+```
+
+
+## Hipótesis o pregunta
+ 
+Para poder plantear una idea, primero tenemos que saber cómo es la base de datos. Buscamos información en [los metadatos](https://datos.madrid.es/FWProjects/egob/Catalogo/MedioAmbiente/Aire/Ficheros/Interprete_ficheros_%20calidad_%20del_%20aire_global.pdf).
+
+La columna *MAGNITUD* nos indica qué contaminante se está midiendo. Vamos a ver la evolución del NO2:
+
+* **08** Dióxido de Nitrógeno NO2 µg/m 3
+
+La columna *ESTACIÓN* nos indica en qué punto se están midiendo los contaminantes. Vemos en los metadatos que se usa la combinación de provincia (28) + municipio (079) + estación (tres cifras). Las estaciones escogidas para este análisis son:
+
+* **28079024** Casa de Campo -> ESTACIÓN 24
+* **28079035** Pza. del Carmen -> ESTACIÓN 35
+* **28079056** Plaza Elíptica -> ESTACIÓN 56
+
+Con esta información, vamos a plantearnos dos preguntas:
+
+* ¿Cómo ha evolucionado la contaminación por NO2 en la Plaza Elíptica durante el año 2021?
+* ¿Cuál es la diferencia de contaminación por NO2 respecto a las otras dos estaciones en el último mes disponible?
+
+
+## Unión
+
+Revisamos que todos los dataframes tengan la misma estructura de columnas y lo juntamos en uno de solo para poder realizar el análisis. **Es importante que incluya una columna con la variable de la fecha o el año**.
+
+```{r}
+
+```
+
+Dentro del loop ya hemos hecho este proceso, así que no lo tendríamos que repetir.
+
+
+## Transformación y limpieza
+
+Para poder analizar los datos necesitamos hacer algunos cambios en la forma en la que vienen los datos. 
+
+Primero filtraremos para quedarnos solo con la información que nos interesa (la magnitud y las estaciones elegidas).
+
+```{r}
+#Forma parte de *tidyverse*
+
+```
+
+```{r}
+
+
+```
+
+
+Una cosa especial de esta base de datos es que, mientras todas las variables se muestran en vertical (ESTACIÓN, MAGNITUD, AÑO, MES...) los días están en horizontal: cada día es una columna. Para facilitar nuestro análisis tendremos que transformar el dataframe de *WIDE* a *LONG*, con todos los días uno debajo del otro en una única columna e igual con los valores, en otra columna. Así tendremos una **observación** para cada día, estación y magnitud.
+
+Por otra parte, vemos que esta base de datos añade para cada día una columna de verificación. En los metadatos se explica que 'ÚNICAMENTE SON VÁLIDOS LOS DATOS QUE LLEVAN EL CÓDIGO DE VALIDACIÓN "V"'.
+
+Vamos a separar los datos de la verificación para pasarlo de WIDE a LONG. 
+
+```{r}
+
+  
+  #Selecciona todas las columnas que no empiezen por 'V'
+
+  
+  #Los nombres de las columnas que empiezen por 'D', los metemos en la columna 'DIA' y los valores, en 'DATO' 
+
+  
+  #transformamos a numericas algunas columnas
+
+         
+         #creamos una columna con la fecha entera
+
+  
+  #nos quedamos solo con las columnas necesarias
+
+```
+
+
+```{r}
+#Repetimos el proceso para los datos de verificación
+
+
+```
+
+
+Unimos los datos de ambas, en este caso unimos columnas y no filas. 
+
+```{r}
+
+```
+
+Con pivot_wider se nos crean días inexistentes (30 de febrero) pero ahora filtraremos estas fechas, junto a las que son inválidas.
+
+```{r}
+ 
+  
+  #creamos una columna que solo se quede los valores de las fechas que tengan 'V' en la columna VERIF
+
+
+  #filtramos las que no son NA
+
+  
+  #quitamos las que no nos interesan
+
+```
+
+
+## Análisis
+
+En este momento ya tenemos los datos bien organizados y limpios y podemos empezar a responder las preguntas.
+Las dividiremos en 4 preguntas más concretas.
+
+**¿Cuál ha sido la media mensual de contaminación en las estaciones?**
+
+```{r}
+
+  
+  #creamos variable con AÑO y MES
+  
+  #agrupamos 
+  
+```
+
+
+**¿Cuánto ha aumentado/caído la contaminación en cada estación entre diciembre de 2020 y diciembre de 2021?**
+
+```{r}
+
+  #la funcion lag() devuelve el valor de la fila anterior
+
+```
+
+
+**¿Cuál ha sido la estación que ha registrado más contaminación en diciembre de 2021?**
+
+```{r}
+
+```
+
+
+**¿Cuál ha sido la diferencia entre la Casa de Campo y la Plaza Elíptica?**
+
+```{r}
+#Extraemos un solo valor
+
+
+```
+
+
+## Visualización
+
+Vamos a publicar los resultados con gráficos de la herramienta de visualización [Datawrapper](https://www.datawrapper.de/) (que tiene [muchos recursos](https://academy.datawrapper.de/) para aprender) directamente desde R usando la librería [DatawRappr](https://github.com/munichrocker/DatawRappr) (consulta [la documentación](https://munichrocker.github.io/DatawRappr/index.html)).
+
+```{r}
+
+```
+
+
+Nos creamos un **token** en nuestra cuenta de Datawrapper.
+
+```{r}
+
+
+```
+
+
+### Gráfico de barras
+
+Visualizamos la media mensual más reciente de la contaminación en esas tres estaciones.
+
+Primero creamos un dataset específicamente con los datos que vayamos a visualizar. En este caso, tenemos que añadir la columna del nombre de la estación y solo queremos esa y la media. Las ordenamos por la columna de media.
+
+```{r}
+
+
+```
+
+```{r}
+#No recomendable, se nos van a crear muchos y no controlamos en qué carpeta se nos crea
+#mi_grafico <- dw_create_chart()
+```
+
+```{r}
+#Subimos los datos al gráfico 
+
+
+#Lo editamos
+
+```
+
+### Gráfico de líneas
+
+Visualizamos la contaminación mensual en la estación de Plaza Elíptica. En lugar de una sola línea, vamos a mostrar cada año en una línea, para comparar meses. Por eso necesitamos cada año como columna.
+
+```{r}
+#Librería para fechas
+
+```
+
+```{r}
+
+
+         #aunque no sean todos de 2021, necesitamos que lleven la misma fecha para la visualización. Luego ya esconderemos el año en el gráfico
+
+```
+
+```{r}
+
+```
+
