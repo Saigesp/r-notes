@@ -98,6 +98,7 @@ ggplot(gapminder_1997, aes(x = lifeExp, y = gdpPercap, color=continent))+ geom_p
 ```
 ![geom_boxplot() example](https://github.com/Saigesp/r-training/blob/master/_media/ggplot2-lab.png?raw=true)
 
+Otro ejemplo:
 
 ```R
 data <- starwars %>% drop_na(mass, height, eye_color) %>% filter(mass < 1000) %>% mutate(
@@ -112,7 +113,7 @@ data <- starwars %>% drop_na(mass, height, eye_color) %>% filter(mass < 1000) %>
 ggplot(data), aes(x=height, y=mass, size=mass, color=eye_color)) +
 geom_point(alpha=0.6) +
 guides(size='none') +
-labs(ç
+labs(
     eye_color='Color de ojos',
     title="Título",
     subtitle="Subtítulo",
